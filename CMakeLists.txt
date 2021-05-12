@@ -8,11 +8,14 @@ set(CXX_EXTENSIONS OFF)
 find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
 
 add_executable( main SIR.cpp main.cpp)
-target_compile_options(main PRIVATE -Wall -Wextra  )
+target_compile_options(main PRIVATE -Wall -Wextra -fsanitize=address )
+target_link_options(main PRIVATE -fsanitize=address)
 
 
 add_executable(SIR.test SIR.cpp SIR.test.cpp)
-target_compile_options(SIR.test PRIVATE -Wall -Wextra )
+target_compile_options(SIR.test PRIVATE -Wall -Wextra -fsanitize=address )
+target_link_options(SIR.test PRIVATE -fsanitize=address)
+
 add_test(COMMAND SIR.test)
 
 add_executable( main.SFML SIR.cpp graph.cpp main.SFML.cpp)
