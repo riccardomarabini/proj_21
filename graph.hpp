@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "SIR.hpp"
+#include "environment.hpp"
 
 namespace Contagion {
 
@@ -96,6 +97,44 @@ class Graph {
     text.setFillColor(sf::Color::Black);
     text.setCharacterSize(15);
     window.draw(text);
+  }
+
+  void draw(Environment const& env) {
+    float const rect_dim = window.getSize().x / env.side();
+    sf::RectangleShape rect(sf::Vector2f(rect_dim, rect_dim));
+    rect.setOutlineThickness(1.f);
+    rect.setOutlineColor(sf::Color::White);
+    for (int i = 0; i != env.side(); ++i) {
+      for (int j = 0; j != env.side(); ++j) {
+        // setting the right fill colour
+        Person P0 = env.condition(i, j);
+        switch (P0) {
+          case Person::Suceptible:
+            rect.setFillColor(sf::Color::Green);
+            break;
+
+          case Person::Infectious:
+            rect.setFillColor(sf::Color::Red);
+            break;
+
+          case Person::Removed:
+            rect.setFillColor(sf::Color(211, 211, 211));
+            break;
+
+          case Person::Void:
+            rect.setFillColor(sf::Color::White);
+            break;
+
+          default:
+            break;
+        }
+        // set correct position
+        float const x = i * rect_dim;
+        float const y = j * rect_dim;
+        rect.setPosition(sf::Vector2f(x, y));
+        window.draw(rect);
+      }
+    }
   }
 };
 

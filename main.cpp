@@ -32,10 +32,9 @@ void Print(std::vector<Con::State> s) {
   double gamma = argc > 5 ? std::atoi(argv[5]) : 0.2;
   int duration = argc > 6 ? std::atoi(argv[6]) : 0;
 std::cout << beta <<"  "<< gamma <<'\n';
-  Con::State init_state{S0, I0, R0, beta, gamma}; // PERCHE' BETA E GAMMAVENGONO MESSE A ZERO ?
-  Con::SIR pandemy{init_state, duration};
-  std::vector<Con::State> s = pandemy.Con::SIR::evolve();
-  Print(s);
+  Con::State init_state{S0, I0, R0, beta, gamma}; // PERCHE' BETA E GAMMAVENGONO
+MESSE A ZERO ? Con::SIR pandemy{init_state, duration}; std::vector<Con::State> s
+= pandemy.Con::SIR::evolve(); Print(s);
 }
 */
 
@@ -75,6 +74,8 @@ int main() {
     std::cout << "Invalid input duration, insert the value again:";
     std::cin >> duration;
   }
+
+  if (!std::cin.good()) std::cerr << "invalid input \n";
 
   Con::State s0{S, I, R, beta, gamma};
   Con::SIR pandemic{s0, duration};

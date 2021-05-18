@@ -23,3 +23,8 @@ target_compile_options(main.SFML PRIVATE -Wall -Wextra -fsanitize=address)
 target_link_libraries(main.SFML PRIVATE sfml-graphics)
 target_link_options(main.SFML PRIVATE -Wall -Wextra -fsanitize=address)
 
+add_executable( main.graphics graph.cpp environment.cpp main.graphics.cpp)
+target_compile_options(main.graphics PRIVATE -Wall -Wextra -fsanitize=address)
+target_link_libraries(main.graphics PRIVATE sfml-graphics)
+target_link_options(main.graphics PRIVATE -Wall -Wextra -fsanitize=address)
+
