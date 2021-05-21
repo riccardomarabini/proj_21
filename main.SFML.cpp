@@ -50,6 +50,7 @@ int main() {
   constexpr int wind_size = 600;
   sf::RenderWindow window{sf::VideoMode(wind_size, wind_size), "SIR graphs",
                           sf::Style::Default};
+  window.setFramerateLimit(60);
   Con::Graph graph{window};
 
   if (window.isOpen()) {
@@ -65,7 +66,9 @@ int main() {
   while (window.isOpen()) {
     sf::Event event;
     while (window.pollEvent(event)) {
-      if (event.type == sf::Event::Closed) window.close();
+      if (event.type == sf::Event::Closed) {
+        window.close();
+      }
     }
   }
 

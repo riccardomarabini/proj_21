@@ -118,7 +118,7 @@ class Graph {
             break;
 
           case Person::Removed:
-            rect.setFillColor(sf::Color(211, 211, 211));
+            rect.setFillColor(sf::Color::Black);
             break;
 
           case Person::Void:
