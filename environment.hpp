@@ -10,29 +10,6 @@ namespace Contagion {
 
 enum class Person { Suceptible, Infectious, Removed, Void };
 
-// prova con una struttura lineare
-/*
-class Environment {
-  // costruttore
-  Environment(int side) : my_env{side * side, Person::Void} {};
-  // returning the reference to the condition of a Person in position (r,c)
-  Person const& condition(int r, int c) {
-    if (r == -1) r = side - 1;
-    if (r == side) r = 0;
-    if (c == -1) c = side - 1;
-    if (c == side) c = 0;
-    assert(r >= 0 && r < side);
-    assert(c >= 0 && c < side);
-    int position_in_linear_vector = c + r * side;
-    return my_env[position_in_linear_vector];
-  }
-
- private:
-  std::vector<Person> my_env;
-  int side;
-};
-*/
-
 class Environment {
  private:
   using Row = std::vector<Person>;
