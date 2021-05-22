@@ -8,6 +8,7 @@
 namespace Con = Contagion;
 
 int main() {
+  try{
   std::cout << "Insert dimesion of the environment: \n";
   int side;
   std::cin >> side;
@@ -98,6 +99,8 @@ int main() {
 
   std::default_random_engine gen{std::random_device{}()};
 
+// event handling 2: game loop with the evolution of the environment
+
   while (window.isOpen()) {
     sf::Event event;
     for (int i = 0; i != duration; ++i) {
@@ -116,5 +119,12 @@ int main() {
         window.close();
       }
     }
+  }
+  }catch(std::exception const& e){
+    std::cerr << e.what() <<'\n';
+    return EXIT_FAILURE;
+  }catch(...){
+    std::cerr << "Unknown exception\n";
+    return EXIT_FAILURE;
   }
 }
