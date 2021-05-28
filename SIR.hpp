@@ -33,12 +33,13 @@ class SIR {
     } else if (s.S + s.I + s.R == 0) {
       throw std::runtime_error { "not enough people" };
     } else if (d < 0) {
-      throw std::runtime_error{"not enough people"};
+      throw std::runtime_error{"invalid duration"};
     }
   };
 
   // func evolve() produces a vector of N="duration" States with the
   // corresponding S I R values, so that it can be printed on terminal
+  
   std::vector<State> evolve() {
     std::vector<State> evo{s0};
     State s = s0;

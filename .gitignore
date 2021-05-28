@@ -1,4 +1,5 @@
 *.o
 *.out
+*.txt
 trial/
 build/

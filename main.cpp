@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <limits>
@@ -20,9 +21,21 @@ void Print(std::vector<Con::State> const& s) {
   std::cout << "+-------------------+-------------------+------------------+\n";
 }
 
+void Print_file(std::vector<Con::State> const& s) {
+  std::ofstream os{"SIR.txt"};
+  if (!os) {
+    std::runtime_error{"couldn't properly open the file"};
+  };
+  for (auto const& v : s) {
+    os << std::setw(10) << v.S << std::setw(10);
+    os << v.I << std::setw(10);
+    os << v.R << std::setw(10) <<'\n';
+  }
+}
+
 // L'input del programma è costituito dai parametri del modello β\betaβ e
 // γ\gammaγ, dai valori iniziali di S, I e R e dalla durata in giorni della
-// simulazione TTT. I parametri vanno presi o da standard input o da riga di
+// simulazione. I parametri vanno presi o da standard input o da riga di
 // comando.
 
 int main() {
@@ -70,6 +83,8 @@ int main() {
 
     std::vector<Con::State> states = pandemic.Con::SIR::evolve();
     Print(states);
+    Print_file(states);
+
   } catch (std::exception const& e) {
     std::cerr << e.what() << '\n';
     return EXIT_FAILURE;
