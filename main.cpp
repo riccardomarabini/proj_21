@@ -29,12 +29,12 @@ void Print_file(std::vector<Con::State> const& s) {
   for (auto const& v : s) {
     os << std::setw(10) << v.S << std::setw(10);
     os << v.I << std::setw(10);
-    os << v.R << std::setw(10) <<'\n';
+    os << v.R << std::setw(10) << '\n';
   }
 }
 
-// L'input del programma è costituito dai parametri del modello β\betaβ e
-// γ\gammaγ, dai valori iniziali di S, I e R e dalla durata in giorni della
+// L'input del programma è costituito dai parametri del modello β e
+// γ, dai valori iniziali di S, I e R e dalla durata in giorni della
 // simulazione. I parametri vanno presi o da standard input o da riga di
 // comando.
 
@@ -43,6 +43,7 @@ int main() {
     std::cout << "The following parameters need to be inserted: \n "
                  "S=susceptible, I=infectous, β (contagion parameter), γ "
                  "(healing parameter) and duration. \n";
+
     int constexpr int_limit = std::numeric_limits<int>::max();
     int S = 0;
     int I = 0;
@@ -68,14 +69,13 @@ int main() {
       std::cout << "Invalid input gamma, insert the value again:";
       std::cin >> gamma;
     }
-    for (; duration < 0;) {
+    for (; duration < 0 || duration > int_limit;) {
       std::cout << "Invalid input duration, insert the value again:";
       std::cin >> duration;
     }
 
     if (!std::cin.good()) {
       throw std::runtime_error{"Invalid parameter(s) input\n"};
-      return EXIT_FAILURE;
     }
 
     Con::State s0{S, I, R, beta, gamma};

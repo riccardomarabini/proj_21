@@ -25,7 +25,7 @@ class Graph {
     }
   }
 
-  // draw continous line
+  // draw continuous line
   void draw_continuous(std::vector<Contagion::State> const& states) {
     int const duration = states.size();
     const int population = states[0].S + states[0].I + states[0].R;
@@ -33,7 +33,7 @@ class Graph {
     constexpr int margin = 20.f;
 
     sf::RectangleShape x_axes(sf::Vector2f(window.getSize().x - margin, 2.f));
-    x_axes.setPosition(sf::Vector2f(10, window.getSize().y - margin));
+    x_axes.setPosition(sf::Vector2f(0.5 * margin, window.getSize().y - margin));
     x_axes.setFillColor(sf::Color::Black);
 
     sf::RectangleShape y_axes(sf::Vector2f(2.f, window.getSize().y));
@@ -76,7 +76,7 @@ class Graph {
     constexpr int margin = 20.f;
 
     sf::RectangleShape x_axes(sf::Vector2f(window.getSize().x - margin, 2.f));
-    x_axes.setPosition(sf::Vector2f(10, window.getSize().y - margin));
+    x_axes.setPosition(sf::Vector2f(0.5 * margin, window.getSize().y - margin));
     x_axes.setFillColor(sf::Color::Black);
 
     sf::RectangleShape y_axes(sf::Vector2f(2.f, window.getSize().y));
@@ -91,7 +91,7 @@ class Graph {
     for (int i = 0; i != duration; ++i) {
       float x = margin + ((i / static_cast<float>(duration)) *
                           (window.getSize().x - 8 * margin));
-      rect.setFillColor(sf::Color::Black);
+      rect.setFillColor(sf::Color::Blue);
       float y_S = (1 - states[i].S / static_cast<float>(population)) *
                   (window.getSize().y - margin);
       rect.setPosition(sf::Vector2f(x, y_S));
@@ -111,8 +111,8 @@ class Graph {
 
   // write legend
   void write_leg(std::string const& leg_title, std::string const& nS,
-                 std::string const& nI, std::string const& nR) {
-    constexpr float x_leg = 0.8;
+                 std::string const& nI, std::string const& nR, std::string const& parameters) {
+    constexpr float x_leg = 0.80;
     constexpr float y_leg = 0.3;
     constexpr float line_space = 16.;
     float const x = window.getSize().x * x_leg;
@@ -141,12 +141,17 @@ class Graph {
     text.setPosition(sf::Vector2f(x, y + 3 * line_space));
     text.setFillColor(sf::Color::Green);
     window.draw(text);
+    
+    text.setString(parameters);
+    text.setPosition(sf::Vector2f(x, y + 4 * line_space));
+    text.setFillColor(sf::Color::Black);
+    window.draw(text);
 
-    sf::RectangleShape shape(sf::Vector2f(100.f, 100.f));
+    sf::RectangleShape shape(sf::Vector2f(120.f, 140.f));
     shape.setFillColor(sf::Color::Transparent);
     shape.setOutlineColor(sf::Color::Black);
     shape.setOutlineThickness(3.f);
-    shape.setPosition(sf::Vector2f(x - 10, y - 10));
+    shape.setPosition(sf::Vector2f(x - 5, y - 10));
     window.draw(shape);
   }
 
@@ -158,7 +163,7 @@ class Graph {
     rect.setOutlineColor(sf::Color::White);
     for (int i = 0; i != env.side(); ++i) {
       for (int j = 0; j != env.side(); ++j) {
-        // setting the right fill colour
+        // setting the right fill colour according to the state of the person
         Person P0 = env.condition(i, j);
         switch (P0) {
           case Person::Suceptible:
@@ -180,7 +185,7 @@ class Graph {
           default:
             break;
         }
-        // set correct position
+        // set position
         float const x = i * rect_dim;
         float const y = j * rect_dim;
         rect.setPosition(sf::Vector2f(x, y));

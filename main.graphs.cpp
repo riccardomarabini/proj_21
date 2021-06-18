@@ -21,17 +21,20 @@ int main(int argc, char* argv[]) {
 
     // Draw the discrete graph
     constexpr int wind_size = 600;
-    sf::RenderWindow window{sf::VideoMode(wind_size, wind_size), "SIR graph; discrete",
-                            sf::Style::Default};
+    sf::RenderWindow window{sf::VideoMode(wind_size, wind_size),
+                            "SIR graph; discrete", sf::Style::Default};
     window.setFramerateLimit(60);
     Con::Graph graph{window};
 
     if (window.isOpen()) {
       window.clear(sf::Color::White);
-      //plot the values:discrete
+      // plot the values:discrete
       graph.draw_dots(states);
       // write the legend on display
-      graph.write_leg("Legend", "S=blue", "I=red", "R=green");
+      std::string parameters = "N=" + std::to_string(pandemic.getPopulation()) +
+                               "\npar1=" + std::to_string(beta) +
+                               "\npar2=" + std::to_string(gamma);
+      graph.write_leg("Legend", "S=blue", "I=red", "R=green", parameters);
       window.display();
     }
 
@@ -44,18 +47,22 @@ int main(int argc, char* argv[]) {
         }
       }
     }
+
     // Draw the continous graph
-    sf::RenderWindow window2 {sf::VideoMode(wind_size, wind_size), "SIR graph; continuous",
-                            sf::Style::Default};
+    sf::RenderWindow window2{sf::VideoMode(wind_size, wind_size),
+                             "SIR graph; continuous", sf::Style::Default};
     window2.setFramerateLimit(60);
     Con::Graph graph2{window2};
 
     if (window2.isOpen()) {
       window2.clear(sf::Color::White);
-      //plot the values: continuous
+      // plot the values: continuous
       graph2.draw_continuous(states);
       // write the legend on display
-      graph2.write_leg("Legend", "S=blue", "I=red", "R=green");
+      std::string parameters = "N=" + std::to_string(pandemic.getPopulation()) +
+                               "\npar1=" + std::to_string(beta) +
+                               "\npar2=" + std::to_string(gamma);
+      graph2.write_leg("Legend", "S=blue", "I=red", "R=green", parameters);
       window2.display();
     }
 

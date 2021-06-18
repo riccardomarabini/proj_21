@@ -10,13 +10,14 @@ namespace Con = Contagion;
 
 int main() {
   try {
-    int constexpr display_limit = 150;
-    std::cout << "Insert dimension of the environment: \n";
+    int constexpr upper_display_limit = 150;
+    int constexpr lower_display_limit = 20;
+    std::cout << "Insert the side of the environment: \n";
     int side;
     std::cin >> side;
-    if (side < 1 || side > display_limit) {
-      std::cout << "Resetting environmetal dimension to 150\n";
-      side = display_limit;
+    if (side < lower_display_limit || side > upper_display_limit) {
+      std::cout << "Resetting environmetal side to 75\n";
+      side = upper_display_limit / 2;
     }
     Con::Environment env{side};
 
@@ -28,12 +29,13 @@ int main() {
     std::cout << "Insert the percentage of infectious people -between (0-1):\n";
     std::cin >> inf_percent;
     if (inf_percent <= 0 || inf_percent >= 1) {
-      std::cout << "Resetting percentage of infectious at 0.01\n";
+      std::cout << "Resetting percentage of infectious to 0.01\n";
       inf_percent = def_inf_percent;
     }
     int const n_void = void_percent * (side * side);
     int n_infetious = inf_percent * (side * side);
 
+    // random distribution of void cells and infectious people
     {
       std::default_random_engine gen{std::random_device{}()};
       std::uniform_int_distribution<> dist{0, side - 1};
@@ -58,7 +60,7 @@ int main() {
       }
     }
 
-    // display the evolution of env as contagion spreads out for a definite
+    // display the evolution of the environment as contagion spreads out for a definite
     // number of days
 
     int constexpr rect_dim = 6;
@@ -72,21 +74,25 @@ int main() {
     std::cout << "Insert the time span of the simulation:\n";
     std::cin >> duration;
     if (duration < 1 || duration > 120) {
-      std::cout << "Resetting duration at 60 days";
+      std::cout << "Resetting duration at 60 days\n";
       duration = 60;
     }
     std::cout << "Insert β (contagion parameter), γ (convalescence parameter) "
-                 "and μ (mortality parameter):\n";
+                 "and μ (mortality parameter)- between ]0-1[ :\n";
     std::cin >> beta >> gamma >> mi;
     if (beta <= 0 || beta > 1) {
-      std::cerr << "invalid beta input";
+      throw std::runtime_error("Invalid beta input");
     }
     if (gamma <= 0 || gamma > 1) {
-      std::cerr << "invalid gamma input";
+      throw std::runtime_error("Invalid gamma input");
     }
     if (mi <= 0 || mi > 1) {
-      std::cerr << "invalid mi input";
+      throw std::runtime_error("Invalid mi input");
     }
+
+    /*if(!std::cin.good()){
+      throw std::runtime_error("Incorrect parameters initialisation");
+    }*/
 
     sf::RenderWindow window(sf::VideoMode(window_size, window_size), "pandemic",
                             sf::Style::Default);

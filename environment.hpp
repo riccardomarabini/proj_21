@@ -20,22 +20,39 @@ class Environment {
  public:
   Environment(int side)
       : m_side(side), my_env(side, Row(side, Person::Suceptible)){};
+
   // return a const reference to the condition of a Person
   Person const& condition(int r, int c) const {
-    if (r == -1) r = m_side - 1;
-    if (r == m_side) r = 0;
-    if (c == -1) c = m_side - 1;
-    if (c == m_side) c = 0;
+    if (r == -1) {
+      r = m_side - 1;
+    }
+    if (r == m_side) {
+      r = 0;
+    }
+    if (c == -1) {
+      c = m_side - 1;
+    }
+    if (c == m_side) {
+      c = 0;
+    }
     assert(r >= 0 && r < m_side);
     assert(c >= 0 && c < m_side);
     return my_env[r][c];
   }
   // return a modifiable reference to the condition of a Person
   Person& condition(int r, int c) {
-    if (r == -1) r = m_side - 1;
-    if (r == m_side) r = 0;
-    if (c == -1) c = m_side - 1;
-    if (c == m_side) c = 0;
+    if (r == -1) {
+      r = m_side - 1;
+    }
+    if (r == m_side) {
+      r = 0;
+    }
+    if (c == -1) {
+      c = m_side - 1;
+    }
+    if (c == m_side) {
+      c = 0;
+    }
     assert(r >= 0 && r < m_side);
     assert(c >= 0 && c < m_side);
     return my_env[r][c];
@@ -44,6 +61,7 @@ class Environment {
   int side() const { return m_side; }
 };
 
+// count the number of infectious people in the neighbouring cells
 inline int N_Inf(Environment const& my_env, int r, int c) {
   int counter = 0;
   for (int i : {-1, 0, -1}) {
@@ -57,6 +75,7 @@ inline int N_Inf(Environment const& my_env, int r, int c) {
   return counter;
 }
 
+//produce a novel environment according to the state of the previous 
 inline Environment evolve(Environment const& current, double beta, double gamma,
                           double mi, std::default_random_engine& gen) {
   int const side = current.side();
@@ -75,7 +94,7 @@ inline Environment evolve(Environment const& current, double beta, double gamma,
             P0 = Person::Infectious;
           }
         } break;
-        // the bigger the gamma, the longer the convalescence
+        // the bigger the gamma, the longer the individual is infectious
         case Person::Infectious: {
           if (dist(gen) >= gamma) {
             if (dist(gen) >= mi) {

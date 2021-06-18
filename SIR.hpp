@@ -16,8 +16,8 @@ struct State {
   double gamma = 0.;
   bool state_is_valid() const {
     long int const max_int = std::numeric_limits<int>::max();
-    return !(S < 0 || S >= max_int || I < 0 || I >= max_int || R < 0 ||
-             R >= max_int || beta < 0 || beta > 1 || gamma < 0 || gamma > 1);
+    return (S >= 0 && S < max_int && I >= 0 && I < max_int && R >= 0 &&
+            R < max_int && beta >= 0 && beta <= 1 && gamma >= 0 && gamma <= 1);
   }
 };
 
@@ -31,7 +31,7 @@ class SIR {
     if (!s.state_is_valid()) {
       throw std::runtime_error{"Invalid initialization of SIR with State"};
     } else if (s.S + s.I + s.R == 0) {
-      throw std::runtime_error { "not enough people" };
+      throw std::runtime_error{"not enough people"};
     } else if (d < 0) {
       throw std::runtime_error{"invalid duration"};
     }
@@ -39,7 +39,7 @@ class SIR {
 
   // func evolve() produces a vector of N="duration" States with the
   // corresponding S I R values, so that it can be printed on terminal
-  
+
   std::vector<State> evolve() {
     std::vector<State> evo{s0};
     State s = s0;
