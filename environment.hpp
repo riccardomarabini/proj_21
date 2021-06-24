@@ -6,6 +6,8 @@
 #include <random>
 #include <vector>
 
+#include "SIR.hpp"
+
 namespace Contagion {
 
 enum class Person { Suceptible, Infectious, Removed, Void };
@@ -75,7 +77,7 @@ inline int N_Inf(Environment const& my_env, int r, int c) {
   return counter;
 }
 
-//produce a novel environment according to the state of the previous 
+// produce a novel environment according to the state of the previous
 inline Environment evolve(Environment const& current, double beta, double gamma,
                           double mi, std::default_random_engine& gen) {
   int const side = current.side();
@@ -85,7 +87,7 @@ inline Environment evolve(Environment const& current, double beta, double gamma,
   for (int i = 0; i != side; ++i) {
     for (int j = 0; j != side; ++j) {
       Person P0 = current.condition(i, j);
-      // gemetric probability:beta * pow(1- beta, N_Inf(current, i, j) -1);
+      // decide which branch to execute according to person's state
       switch (P0) {
         case Person::Suceptible: {
           auto const p_inf = 1 - pow(1 - beta, N_Inf(current, i, j));
@@ -111,6 +113,33 @@ inline Environment evolve(Environment const& current, double beta, double gamma,
     }
   }
   return next;
+}
+
+inline Contagion::State count_SIR(Environment const& current) {
+  int const side = current.side();
+  int n_sus = 0;
+  int n_inf = 0;
+  int n_rem = 0;
+  for (int i = 0; i != side; ++i) {
+    for (int j = 0; j != side; ++j) {
+      Person P0 = current.condition(i, j);
+      switch (P0) {
+        case Person::Suceptible:
+          n_sus += 1;
+          break;
+        case Person::Infectious:
+          n_inf += 1;
+          break;
+        case Person::Removed:
+          n_rem += 1;
+          break;
+        default:
+        break;
+      }
+    }
+  }
+  State state{n_sus, n_inf, n_rem};
+  return state;
 }
 
 }  // namespace Contagion

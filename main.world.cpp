@@ -60,8 +60,8 @@ int main() {
       }
     }
 
-    // display the evolution of the environment as contagion spreads out for a definite
-    // number of days
+    // display the evolution of the environment as contagion spreads out for a
+    // definite number of days
 
     int constexpr rect_dim = 6;
     int const window_size = rect_dim * side;
@@ -111,6 +111,8 @@ int main() {
 
     bool toggle = true;
 
+    Con::State state;
+
     while (window.isOpen()) {
       sf::Event event;
       while (window.pollEvent(event)) {
@@ -130,6 +132,11 @@ int main() {
           env = evolve(env, beta, gamma, mi, gen);
           last = now;
           i += 1;
+          state = count_SIR(env);
+          std::cout << "Susceptible= " << state.S << '\n'
+                    << "Infectiuos= " << state.I << '\n'
+                    << "Removed= " << state.R << '\n'
+                    << "N= " << state.S+state.I+state.R  << '\n';
         }
       }
     }

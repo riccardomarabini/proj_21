@@ -111,7 +111,8 @@ class Graph {
 
   // write legend
   void write_leg(std::string const& leg_title, std::string const& nS,
-                 std::string const& nI, std::string const& nR, std::string const& parameters) {
+                 std::string const& nI, std::string const& nR,
+                 std::string const& parameters) {
     constexpr float x_leg = 0.80;
     constexpr float y_leg = 0.3;
     constexpr float line_space = 16.;
@@ -141,7 +142,7 @@ class Graph {
     text.setPosition(sf::Vector2f(x, y + 3 * line_space));
     text.setFillColor(sf::Color::Green);
     window.draw(text);
-    
+
     text.setString(parameters);
     text.setPosition(sf::Vector2f(x, y + 4 * line_space));
     text.setFillColor(sf::Color::Black);
