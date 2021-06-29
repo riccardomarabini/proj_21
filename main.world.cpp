@@ -34,7 +34,7 @@ int main() {
       inf_percent = def_inf_percent;
     }
     int const n_void = void_percent * (side * side);
-    int n_infetious = inf_percent * (side * side);
+    int n_infectious = inf_percent * (side * side);
 
     // random distribution of void cells and infectious people
     {
@@ -50,7 +50,7 @@ int main() {
         env.condition(r, c) = Con::Person::Void;
       }
 
-      for (int i = 0; i != n_infetious; ++i) {
+      for (int i = 0; i != n_infectious; ++i) {
         int r = dist(gen);
         int c = dist(gen);
         for (; env.condition(r, c) == Con::Person::Infectious ||
@@ -89,10 +89,6 @@ int main() {
     }
     if (mi <= 0 || mi > 1) {
       throw std::runtime_error("Invalid mi input");
-    }
-
-    if (!std::cin.good()) {
-      throw std::runtime_error("Incorrect parameter(s) initialisation");
     }
 
     sf::RenderWindow window(sf::VideoMode(window_size, window_size), "pandemic",
