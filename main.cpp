@@ -8,6 +8,7 @@
 
 namespace Con = Contagion;
 
+// print S-I-R values on terminal
 void Print(std::vector<Con::State> const& s) {
   std::cout << "+-------------------+-------------------+------------------+\n"
             << "|          S        |          I        |          R       |\n"
@@ -21,10 +22,11 @@ void Print(std::vector<Con::State> const& s) {
   std::cout << "+-------------------+-------------------+------------------+\n";
 }
 
+// print S-I-R values on file
 void Print_file(std::vector<Con::State> const& s) {
   std::ofstream os{"SIR.txt"};
   if (!os) {
-    std::runtime_error{"couldn't properly open the file"};
+    std::runtime_error{"Failure to open the file"};
   };
   for (auto const& v : s) {
     os << std::setw(10) << v.S << std::setw(10);
@@ -33,15 +35,10 @@ void Print_file(std::vector<Con::State> const& s) {
   }
 }
 
-// L'input del programma è costituito dai parametri del modello β e
-// γ, dai valori iniziali di S, I e R e dalla durata in giorni della
-// simulazione. I parametri vanno presi o da standard input o da riga di
-// comando.
-
 int main() {
   try {
     std::cout << "The following parameters need to be inserted: \n "
-                 "S=susceptible, I=infectous, β (contagion parameter), γ "
+                 "S=susceptible, I=infectious, β (contagion parameter), γ "
                  "(healing parameter) and duration. \n";
 
     int constexpr int_limit = std::numeric_limits<int>::max();
@@ -53,24 +50,24 @@ int main() {
     int duration = 0;
     std::cin >> S >> I >> beta >> gamma >> duration;
     for (; S < 0 || S > int_limit;) {
-      std::cout << "Invalid input S, insert the value again:";
+      std::cout << "Invalid S input, insert the value again:";
       std::cin >> S;
     }
     for (; I < 0;) {
-      std::cout << "Invalid input I, insert the value again:";
+      std::cout << "Invalid I input, insert the value again:";
       std::cin >> I;
     }
-    // for(;R<0;) std::cin >> R;
+
     for (; beta < 0 || beta > 1.;) {
-      std::cout << "Invalid input beta, insert the value again:";
+      std::cout << "Invalid beta input, insert the value again:";
       std::cin >> beta;
     }
     for (; gamma < 0 || gamma > 1.;) {
-      std::cout << "Invalid input gamma, insert the value again:";
+      std::cout << "Invalid gamma input, insert the value again:";
       std::cin >> gamma;
     }
     for (; duration < 0 || duration > int_limit;) {
-      std::cout << "Invalid input duration, insert the value again:";
+      std::cout << "Invalid duration input, insert the value again:";
       std::cin >> duration;
     }
 

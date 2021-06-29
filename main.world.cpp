@@ -16,7 +16,7 @@ int main() {
     int side;
     std::cin >> side;
     if (side < lower_display_limit || side > upper_display_limit) {
-      std::cout << "Resetting environmetal side to 75\n";
+      std::cout << "Resetting environmental side to 75 cells\n";
       side = upper_display_limit / 2;
     }
     Con::Environment env{side};
@@ -26,10 +26,11 @@ int main() {
     double constexpr void_percent = 0.02;
     double constexpr def_inf_percent = 0.01;
     double inf_percent;
-    std::cout << "Insert the percentage of infectious people -between (0-1):\n";
+    std::cout
+        << "Insert the percentage of infectious people - between ]0-1[:\n";
     std::cin >> inf_percent;
     if (inf_percent <= 0 || inf_percent >= 1) {
-      std::cout << "Resetting percentage of infectious to 0.01\n";
+      std::cout << "Resetting percentage of infectious people to 0.01\n";
       inf_percent = def_inf_percent;
     }
     int const n_void = void_percent * (side * side);
@@ -90,9 +91,9 @@ int main() {
       throw std::runtime_error("Invalid mi input");
     }
 
-    /*if(!std::cin.good()){
-      throw std::runtime_error("Incorrect parameters initialisation");
-    }*/
+    if (!std::cin.good()) {
+      throw std::runtime_error("Incorrect parameter(s) initialisation");
+    }
 
     sf::RenderWindow window(sf::VideoMode(window_size, window_size), "pandemic",
                             sf::Style::Default);
@@ -134,9 +135,9 @@ int main() {
           i += 1;
           state = count_SIR(env);
           std::cout << "Susceptible= " << state.S << '\n'
-                    << "Infectiuos= " << state.I << '\n'
+                    << "Infectious= " << state.I << '\n'
                     << "Removed= " << state.R << '\n'
-                    << "N= " << state.S+state.I+state.R  << '\n';
+                    << "N= " << state.S + state.I + state.R << '\n';
         }
       }
     }

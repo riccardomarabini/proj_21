@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include <cmath>
+#include <limits>
 #include <random>
 #include <vector>
 
@@ -21,7 +22,12 @@ class Environment {
 
  public:
   Environment(int side)
-      : m_side(side), my_env(side, Row(side, Person::Suceptible)){};
+      : m_side(side), my_env(side, Row(side, Person::Suceptible)) {
+    if (side < 0 || side > std::numeric_limits<int>::max()) {
+      throw std::runtime_error("Invalid dimension of the environment");
+    }
+  };
+  Environment() : Environment{0} {};
 
   // return a const reference to the condition of a Person
   Person const& condition(int r, int c) const {
@@ -60,6 +66,7 @@ class Environment {
     return my_env[r][c];
   }
 
+  // return the side dimension of the environment
   int side() const { return m_side; }
 };
 
@@ -77,7 +84,7 @@ inline int N_Inf(Environment const& my_env, int r, int c) {
   return counter;
 }
 
-// produce a novel environment according to the state of the previous
+// produce a novel environment according to the state of the previouso one
 inline Environment evolve(Environment const& current, double beta, double gamma,
                           double mi, std::default_random_engine& gen) {
   int const side = current.side();
@@ -115,6 +122,8 @@ inline Environment evolve(Environment const& current, double beta, double gamma,
   return next;
 }
 
+// count the number of susceptible, infectious and removed people
+// in the environment
 inline Contagion::State count_SIR(Environment const& current) {
   int const side = current.side();
   int n_sus = 0;
@@ -134,7 +143,7 @@ inline Contagion::State count_SIR(Environment const& current) {
           n_rem += 1;
           break;
         default:
-        break;
+          break;
       }
     }
   }

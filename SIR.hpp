@@ -30,16 +30,18 @@ class SIR {
  public:
   SIR(State const& s, int d) : s0{s}, duration{d}, N{s.S + s.I + s.R} {
     if (!s.state_is_valid()) {
-      throw std::runtime_error{"Invalid initialization of SIR with State"};
+      throw std::runtime_error{"Invalid initialisation of SIR with State"};
     } else if (s.S + s.I + s.R == 0) {
-      throw std::runtime_error{"not enough people"};
+      throw std::runtime_error{"Not enough people"};
     } else if (d < 0) {
-      throw std::runtime_error{"invalid duration"};
+      throw std::runtime_error{"Invalid duration"};
     }
   };
 
-  // func evolve() produces a vector of N="duration" States with the
-  // corresponding S I R values, so that it can be printed on terminal
+  SIR() = default;
+
+  // evolve() produces a vector of N=1+"duration" States with the
+  // corresponding S I R values, so that they can be printed on terminal
 
   std::vector<State> evolve() {
     std::vector<State> evo{s0};
@@ -60,6 +62,7 @@ class SIR {
     return evo;
   }
 
+  // return the total number of population
   int getPopulation() const noexcept { return N; }
 };
 

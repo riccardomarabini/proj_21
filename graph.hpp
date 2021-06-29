@@ -20,7 +20,7 @@ class Graph {
     if (!font.loadFromFile("font.ttf")) {
       if (!font.loadFromFile(
               "/usr/share/fonts/truetype/msttcorefonts/arialbi.ttf")) {
-        throw std::runtime_error{"cannot load font"};
+        throw std::runtime_error{"Cannot load font"};
       }
     }
   }
