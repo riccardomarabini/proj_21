@@ -41,7 +41,6 @@ int main() {
                  "S=susceptible, I=infectious, β (contagion parameter), γ "
                  "(healing parameter) and duration. \n";
 
-    int constexpr int_limit = std::numeric_limits<int>::max();
     int S = 0;
     int I = 0;
     int R = 0;
@@ -49,27 +48,12 @@ int main() {
     double gamma = 0.;
     int duration = 0;
     std::cin >> S >> I >> beta >> gamma >> duration;
-    for (; S < 0 || S > int_limit;) {
-      std::cout << "Invalid S input, insert the value again:";
-      std::cin >> S;
-    }
-    for (; I < 0;) {
-      std::cout << "Invalid I input, insert the value again:";
-      std::cin >> I;
-    }
 
-    for (; beta < 0 || beta > 1.;) {
-      std::cout << "Invalid beta input, insert the value again:";
-      std::cin >> beta;
-    }
-    for (; gamma < 0 || gamma > 1.;) {
-      std::cout << "Invalid gamma input, insert the value again:";
-      std::cin >> gamma;
-    }
-    for (; duration < 0 || duration > int_limit;) {
-      std::cout << "Invalid duration input, insert the value again:";
-      std::cin >> duration;
-    }
+    std::cout << "Initial parameters \nS= " << S << '\n';
+    std::cout << "I= " << I << '\n';
+    std::cout << "beta= " << beta << '\n';
+    std::cout << "gamma= " << gamma << '\n';
+    std::cout << "duration= " << duration << '\n';
 
     if (!std::cin.good()) {
       throw std::runtime_error{"Invalid parameter(s) input\n"};
