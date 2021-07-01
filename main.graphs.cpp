@@ -38,16 +38,6 @@ int main(int argc, char* argv[]) {
       window.display();
     }
 
-    // game loop
-    while (window.isOpen()) {
-      sf::Event event;
-      while (window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
-          window.close();
-        }
-      }
-    }
-
     // Draw the continous graph
     sf::RenderWindow window2{sf::VideoMode(wind_size, wind_size),
                              "SIR graph; continuous", sf::Style::Default};
@@ -67,8 +57,15 @@ int main(int argc, char* argv[]) {
     }
 
     // game loop
-    while (window2.isOpen()) {
+    while (window2.isOpen() || window.isOpen()) {
       sf::Event event;
+
+      while (window.pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
+          window.close();
+        }
+      }
+
       while (window2.pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
           window2.close();
