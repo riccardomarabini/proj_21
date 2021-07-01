@@ -3,7 +3,6 @@
 
 #include <cassert>
 #include <cmath>
-#include <limits>
 #include <random>
 #include <vector>
 
@@ -23,7 +22,7 @@ class Environment {
  public:
   Environment(int side)
       : m_side(side), my_env(side, Row(side, Person::Suceptible)) {
-    if (side < 0 || side > std::numeric_limits<int>::max()) {
+    if (side < 0) {
       throw std::runtime_error("Invalid dimension of the environment");
     }
   };
