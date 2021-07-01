@@ -16,9 +16,9 @@ struct State {
   double gamma = 0.;
 
   bool state_is_valid() const {
-    long int const max_int = std::numeric_limits<int>::max();
-    return (S >= 0 && S < max_int && I >= 0 && I < max_int && R >= 0 &&
-            R < max_int && beta >= 0 && beta <= 1 && gamma >= 0 && gamma <= 1);
+    // long int const max_int = std::numeric_limits<int>::max();
+    return (S >= 0 && I >= 0 && R >= 0 && beta >= 0 && beta <= 1 &&
+            gamma >= 0 && gamma <= 1);
   }
 };
 

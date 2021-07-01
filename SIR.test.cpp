@@ -37,7 +37,7 @@ TEST_CASE("Testing function state_is_valid") {
   }
   SUBCASE("inacceptable value for I") {
     int duration{};
-    Con::State init_state{1000, std::numeric_limits<int>::max(), 0, 0.7, 0.3};
+    Con::State init_state{1000, -5, 0, 0.7, 0.3};
     CHECK(init_state.state_is_valid() == false);
     CHECK_THROWS(Con::SIR(init_state, duration));
   }

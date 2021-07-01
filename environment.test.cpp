@@ -3,7 +3,6 @@
 #include "environment.hpp"
 
 #include <SFML/Graphics.hpp>
-#include <limits>
 #include <random>
 #include <vector>
 
